@@ -313,6 +313,29 @@ local theme = lush(function(injected_functions)
 
     -- semantic highlighting
     sym("@lsp.type.type") { fg = Color17 },
+
+    -- vue
+    sym "@punctuation.special.vue" { String },
+    sym "@method.vue" { fg = Color20 },
+    sym "@group.name" { fg = Color0 },
+    sym "@interpolation" { fg = Color2 },
+    sym "@directive" { fg = Color4, italic = true },
+
+    -- css
+    sym "@type.qualifier.css" { fg = Color0, bold = true, italic = true },
+    sym "@type.definition.css" { fg = Color1 },
+    sym "@type.css" { fg = Color1 },
+    sym "@property.css" { fg = Color6 },
+    sym "@property_value.css" { fg = Color2 },
+    sym "@class.name.css" { fg = Color2 },
+    sym "@tag.name.css" { fg = Color5 },
+    sym "@tag.pseudo_class.css" { fg = Color4 },
+    sym "@tag.pseudo_element.css" { sym "@tag.pseudo_class.css" },
+    sym "@tag.feature_name.css" { fg = Color6 },
+    sym "@tag.id.css" { fg = Color3 },
+    sym "@tag.attribute_name.css" { fg = Color2 },
+    sym "@unit.css" { fg = Color20 },
+    sym "@attribute_value.css" { fg = Color20 },
   }
 end)
 
