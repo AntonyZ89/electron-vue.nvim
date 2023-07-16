@@ -175,12 +175,12 @@ local theme = lush(function(injected_functions)
     Function { fg = Color3 },   --   Function name (also: methods for classes)
 
     -- Statement      { }, -- (*) Any statement
-    Conditional { fg = Color4, gui = 'italic' }, --   if, then, else, endif, switch, etc.
-    Repeat { fg = Color4, gui = 'italic' },      --   for, do, while, etc.
-    Label { fg = Color4, gui = 'italic' },       --   case, default, etc.
-    Operator { fg = Color6 },                    --   "sizeof", "+", "*", etc.
-    Keyword { fg = Color4, gui = 'italic' },     --   any other keyword
-    Exception { fg = Color4, gui = 'italic' },   --   try, catch, throw
+    Conditional { fg = Color4, italic = true }, --   if, then, else, endif, switch, etc.
+    Repeat { fg = Color4, italic = true },      --   for, do, while, etc.
+    Label { fg = Color4, italic = true },       --   case, default, etc.
+    Operator { fg = Color6 },                   --   "sizeof", "+", "*", etc.
+    Keyword { fg = Color4, italic = true },     --   any other keyword
+    Exception { fg = Color4, italic = true },   --   try, catch, throw
 
     -- PreProc        { }, -- (*) Generic Preprocessor
     Include { Keyword }, --   Preprocessor #include
@@ -280,7 +280,7 @@ local theme = lush(function(injected_functions)
     -- sym"@string.escape"     { }, -- SpecialChar
     -- sym"@string.special"    { }, -- SpecialChar
     -- sym"@character"         { }, -- Character
-    sym "@character.special" { bg = Color4 }, -- SpecialChar
+    sym("@character.special") { bg = Color4 }, -- SpecialChar
     -- sym"@number"            { }, -- Number
     -- sym"@boolean"           { }, -- Boolean
     -- sym"@float"             { }, -- Float
@@ -290,7 +290,7 @@ local theme = lush(function(injected_functions)
     -- sym"@parameter"         { }, -- Identifier
     -- sym"@method"            { }, -- Function
     -- sym"@field"             { }, -- Identifier
-    sym "@property" { fg = Color5 }, -- Identifier
+    sym("@property") { fg = Color5 }, -- Identifier
     -- sym"@constructor"       { }, -- Special
     -- sym"@conditional"       { }, -- Conditional
     -- sym"@repeat"            { }, -- Repeat
@@ -299,7 +299,7 @@ local theme = lush(function(injected_functions)
     -- sym"@keyword"           { }, -- Keyword
     -- sym"@exception"         { }, -- Exception
     -- sym"@variable"          { }, -- Identifier
-    sym "@type" { fg = Color5 }, -- Type
+    sym("@type") { fg = Color5 }, -- Type
     -- sym"@type.definition"   { }, -- Typedef
     -- sym"@storageclass"      { }, -- StorageClass
     -- sym"@structure"         { }, -- Structure
@@ -307,35 +307,68 @@ local theme = lush(function(injected_functions)
     -- sym"@include"           { }, -- Include
     -- sym"@preproc"           { }, -- PreProc
     -- sym"@debug"             { }, -- Debug
-    sym "@tag" { fg = Color5 },           -- Tag
-    sym "@tag.attribute" { fg = Color2 }, -- Tag
-    sym "@tag.delimiter" { fg = Color9 }, -- Tag
+    sym("@tag") { fg = Color5 },           -- Tag
+    sym("@tag.attribute") { fg = Color2 }, -- Tag
+    sym("@tag.delimiter") { fg = Color9 }, -- Tag
 
     -- semantic highlighting
-    sym("@lsp.type.type") { fg = Color17 },
+    sym("@lsp.type.type") { fg = Color20 },
+    sym("@lsp.type.property") { fg = Color5 },
+    sym("@lsp.typemod.property.declaration") { fg = Color17 },
+    sym("@lsp.mod.declaration.typescript") { Identifier },
+    sym("@lsp.type.class.typescript") { Identifier },
+
+    -- semantic highlighting (typescript)
+    sym("@lsp.typemod.property.declaration.typescript") { Identifier },
+
+    -- treesitter
 
     -- vue
-    sym "@punctuation.special.vue" { String },
-    sym "@method.vue" { fg = Color20 },
-    sym "@group.name" { fg = Color0 },
-    sym "@interpolation" { fg = Color2 },
-    sym "@directive" { fg = Color4, italic = true },
+    sym("@punctuation.special.vue") { String },       -- attrs's quotes
+    sym("@method.vue") { fg = Color20 },              -- :property
+    sym("@interpolation") { fg = Color2 },            -- {{ }}
+    sym("@directive") { fg = Color4, italic = true }, -- v-if, v-else, v-else-if, etc..
 
     -- css
-    sym "@type.qualifier.css" { fg = Color0, bold = true, italic = true },
-    sym "@type.definition.css" { fg = Color1 },
-    sym "@type.css" { fg = Color1 },
-    sym "@property.css" { fg = Color6 },
-    sym "@property_value.css" { fg = Color2 },
-    sym "@class.name.css" { fg = Color2 },
-    sym "@tag.name.css" { fg = Color5 },
-    sym "@tag.pseudo_class.css" { fg = Color4 },
-    sym "@tag.pseudo_element.css" { sym "@tag.pseudo_class.css" },
-    sym "@tag.feature_name.css" { fg = Color6 },
-    sym "@tag.id.css" { fg = Color3 },
-    sym "@tag.attribute_name.css" { fg = Color2 },
-    sym "@unit.css" { fg = Color20 },
-    sym "@attribute_value.css" { fg = Color20 },
+    sym("@type.qualifier.css") { fg = Color4, bold = true, italic = true }, -- !important
+    sym("@type.definition.css") { fg = Color5 },                            -- variable definition e.g.: --border-color: red;
+    sym("@type.css") { fg = Color5 },
+    sym("@property.css") { Identifier },
+    sym("@property_value.css") { fg = Color2 },
+    sym("@class.name.css") { fg = Color2 },                           -- change class color, e.g.: .example
+    sym("@tag.name.css") { fg = Color5 },                             -- change tag color, e.g.: div, span, h1, h2, etc.
+    sym("@tag.pseudo_class.css") { fg = Color4 },                     -- :hover, :active, etc.
+    sym("@tag.pseudo_element.css") { sym "@tag.pseudo_class.css" },   -- ::before, ::after
+    sym("@tag.feature_name.css") { fg = Color6 },
+    sym("@tag.id.css") { fg = Color3 },                               -- #example
+    sym("@tag.attribute_name.css") { fg = Color2 },                   -- e.g.: div[class="example"] - change colro of "class" attribute
+    sym("@unit.css") { fg = Color20 },                                -- e.g.: px, rem, em, etc.
+    sym("@attribute_value.css") { fg = Color20 },                     -- change color of property's value
+    sym("@call_expression.type.css") { sym("@type.definition.css") }, -- change color of variable when used in var()
+
+    -- scss
+    sym("@type.qualifier.scss") { sym("@type.qualifier.css") },   -- !important
+    sym("@type.definition.scss") { sym("@type.definition.css") }, -- variable definition e.g.: --border-color: red;
+    sym("@type.scss") { sym("@type.css") },
+    sym("@property.scss") { sym("@property.css") },
+    sym("@property_value.scss") { sym("@property_value.css") },
+    sym("@class.name.scss") { sym("@class.name.css") },                     -- change class color, e.g.: .example
+    sym("@tag.name.scss") { sym("@tag.name.css") },                         -- change tag color, e.g.: div, span, h1, h2, etc.
+    sym("@tag.pseudo_class.scss") { sym("@tag.pseudo_class.css") },         -- :hover, :active, etc.
+    sym("@tag.pseudo_element.scss") { sym("@tag.pseudo_class.scss") },      -- ::before, ::after
+    sym("@tag.feature_name.scss") { sym("@tag.feature_name.css") },
+    sym("@tag.id.scss") { sym("@tag.id.css") },                             -- #example
+    sym("@tag.attribute_name.scss") { sym("@tag.attribute_name.css") },     -- e.g.: div[class="example"] - change colro of "class" attribute
+    sym("@unit.scss") { sym("@unit.css") },                                 -- e.g.: px, rem, em, etc.
+    sym("@attribute_value.scss") { sym("@attribute_value.css") },           -- change color of property's value
+    sym("@call_expression.type.scss") { sym("@call_expression.type.css") }, -- change color of variable when used in var()
+
+    -- typescript
+    sym("@constant.builtin.typescript") { fg = Color3 },
+    sym("@type.typescript") { fg = Color20 },
+    sym("@punctuation.special.typescript") { fg = Color5 },
+    sym("@variable.builtin.typescript") { Identifier },
+    sym("@type.builtin.typescript") { fg = Color20 },
   }
 end)
 
