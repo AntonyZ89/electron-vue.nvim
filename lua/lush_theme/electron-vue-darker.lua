@@ -91,7 +91,7 @@ local theme = lush(function(injected_functions)
     -- CursorIM       { }, -- Like Cursor, but used when in IME mode |CursorIM|
     -- CursorColumn   { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
     CursorLine { bg = Color13 }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-    -- Directory      { }, -- Directory names (and other special names in listings)
+    Directory {},                -- (reset) Directory names (and other special names in listings)
     DiffAdd { fg = Color1 },     -- Diff mode: Added line |diff.txt|
     DiffChange { fg = Color2 },  -- Diff mode: Changed line |diff.txt|
     DiffDelete { fg = Color5 },  -- Diff mode: Deleted line |diff.txt|
@@ -144,7 +144,7 @@ local theme = lush(function(injected_functions)
     TabLine { bg = Color16, fg = Color15 },     -- Tab pages line, not active tab page label
     TabLineFill { bg = Color16, fg = Color15 }, -- Tab pages line, where there are no labels
     TabLineSel { bg = Color17, fg = Color10 },  -- Tab pages line, active tab page label
-    -- Title          { }, -- Titles for output from ":set all", ":autocmd" etc.
+    Title {},                                   -- (reset) Titles for output from ":set all", ":autocmd" etc.
     Visual { bg = Color13 },                    -- Visual mode selection
     -- VisualNOS      { }, -- Visual mode selection when vim is "Not Owning the Selection".
     -- WarningMsg     { }, -- Warning messages
@@ -321,6 +321,9 @@ local theme = lush(function(injected_functions)
     -- semantic highlighting (typescript)
     sym("@lsp.typemod.property.declaration.typescript") { Identifier },
 
+    -- semantic highlighting (lua)
+    sym("@lsp.type.property.lua") { Identifier },
+
     -- treesitter
 
     -- vue
@@ -365,10 +368,25 @@ local theme = lush(function(injected_functions)
 
     -- typescript
     sym("@constant.builtin.typescript") { fg = Color3 },
-    sym("@type.typescript") { fg = Color20 },
-    sym("@punctuation.special.typescript") { fg = Color5 },
+    sym("@type.typescript") { fg = Color20 },               -- types inside import statements
+    sym("@punctuation.special.typescript") { fg = Color5 }, -- `template ${variable}`
     sym("@variable.builtin.typescript") { Identifier },
     sym("@type.builtin.typescript") { fg = Color20 },
+
+    -- php
+    sym("@type.php") { fg = Color20 },            -- class color
+    sym("@type.qualifier.php") { fg = Color4 },   -- public, const, private, static
+    sym("@property.php") { Identifier },          -- variable color
+    sym("@variable.builtin.php") { fg = Color4 }, -- $this, self
+    sym("@dollar_sign.php") { fg = Color6 },      -- variable's dolar sign
+    sym("@constant.builtin.php") { fg = Color3 }, -- null
+
+    -- phpdoc
+    sym("@attribute.phpdoc") { fg = Color6 },                  -- >>@property<< @var
+    sym("@type.phpdoc") { fg = Color5, italic = true },        -- @property >>int<< $variable
+    sym("@named_type.phpdoc") { fg = Color20, italic = true }, -- @property >>User<< $variable
+    sym("@property.phpdoc") { fg = Color0 },                   -- @property int $>>variable<<
+    sym("@keyword.phpdoc") { sym("@property.phpdoc") },        -- @property int >>$<<variable
   }
 end)
 
