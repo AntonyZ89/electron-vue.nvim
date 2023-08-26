@@ -112,7 +112,7 @@ local theme = lush(function(injected_functions)
     CursorLineNr { fg = Color9 }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
     -- CursorLineFold { }, -- Like FoldColumn when 'cursorline' is set for the cursor line
     -- CursorLineSign { }, -- Like SignColumn when 'cursorline' is set for the cursor line
-    MatchParen { fg = Color1, gui = "reverse" }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+    MatchParen { fg = Color1, bg = Color19 }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
     -- ModeMsg        { }, -- 'showmode' message (e.g., "-- INSERT -- ")
     -- MsgArea        { }, -- Area for messages and cmdline
     -- MsgSeparator   { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
@@ -133,7 +133,7 @@ local theme = lush(function(injected_functions)
     PmenuThumb { bg = Color10, fg = Color9 }, -- Popup menu: Thumb of the scrollbar.
     -- Question       { }, -- |hit-enter| prompt and yes/no questions
     -- QuickFixLine   { }, -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
-    Search { gui = "reverse" }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
+    Search { bg = Normal.fg.darken(20), fg = Color8, gui = "bold" }, -- Last search pattern highlighting (see 'hlsearch'). Also used for similar items that need to stand out.
     -- SpecialKey     { }, -- Unprintable characters: text displayed differently from what it really is. But not 'listchars' whitespace. |hl-Whitespace|
     -- SpellBad       { }, -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
     -- SpellCap       { }, -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
@@ -202,8 +202,8 @@ local theme = lush(function(injected_functions)
 
     -- Underlined     { gui = "underline" }, -- Text that stands out, HTML links
     -- Ignore         { }, -- Left blank, hidden |hl-Ignore| (NOTE: May be invisible here in template)
-    -- Error { }, -- Any erroneous construct
-    -- Todo           { }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+    -- Error          { }, -- Any erroneous construct
+    Todo { fg = Color15 }, -- Anything that needs extra attention; mostly the keywords TODO FIXME and XXX
 
     -- These groups are for the native LSP client and diagnostic system. Some
     -- other LSP clients may use these groups, or use their own. Consult your
@@ -315,11 +315,13 @@ local theme = lush(function(injected_functions)
     sym("@lsp.type.type") { fg = Color20 },
     sym("@lsp.type.property") { fg = Color5 },
     sym("@lsp.typemod.property.declaration") { fg = Color17 },
-    sym("@lsp.mod.declaration.typescript") { Identifier },
-    sym("@lsp.type.class.typescript") { Identifier },
 
     -- semantic highlighting (typescript)
     sym("@lsp.typemod.property.declaration.typescript") { Identifier },
+    sym("@lsp.typemod.member.declaration.typescript") { Function },
+    sym("@lsp.typemod.function.declaration.typescript") { Function },
+    sym("@lsp.mod.declaration.typescript") { Identifier },
+    sym("@lsp.type.class.typescript") { fg = Color20 },
 
     -- semantic highlighting (lua)
     sym("@lsp.type.property.lua") { Identifier },
@@ -327,10 +329,19 @@ local theme = lush(function(injected_functions)
     -- treesitter
 
     -- vue
-    sym("@punctuation.special.vue") { String },       -- attrs's quotes
-    sym("@method.vue") { fg = Color20 },              -- :property
-    sym("@interpolation") { fg = Color2 },            -- {{ }}
-    sym("@directive") { fg = Color4, italic = true }, -- v-if, v-else, v-else-if, etc..
+    sym("@punctuation.special.vue") { String },            -- attrs's quotes
+    sym("@method.vue") { fg = Color20 },                   -- :property
+    sym("@interpolation.vue") { fg = Color2 },             -- {{ }}
+    sym("@directive.vue") { fg = Color4, italic = true },  -- v-if, v-else, v-else-if, etc..
+    sym("@component_tag.vue") { fg = Color5.lighten(20) }, -- component on html <FakeComponent />
+
+    -- tsx
+    sym("@component_tag.tsx") { sym("@component_tag.vue") },                              -- component on html <FakeComponent />
+    sym("@component_tag.property.tsx") { fg = sym("@component_tag.tsx").fg.lighten(30) }, -- component on html <FakeComponent />
+
+    -- jsx
+    sym("@component_tag.javascript") { sym("@component_tag.tsx") },                   -- component on html <FakeComponent />
+    sym("@component_tag.property.javascript") { sym("@component_tag.property.tsx") }, -- component on html <FakeComponent />
 
     -- css
     sym("@type.qualifier.css") { fg = Color4, bold = true, italic = true }, -- !important
@@ -370,19 +381,23 @@ local theme = lush(function(injected_functions)
     sym("@constant.builtin.typescript") { fg = Color3 },
     sym("@type.typescript") { fg = Color20 },               -- types inside import statements
     sym("@punctuation.special.typescript") { fg = Color5 }, -- `template ${variable}`
+    sym("@type.qualifier.typescript") { fg = Color4 },
     sym("@variable.builtin.typescript") { Identifier },
-    sym("@type.builtin.typescript") { fg = Color20 },
+    sym("@type.builtin.typescript") { fg = Color5 },
+    sym("@constructor.typescript") { fg = Color3 },
 
     -- php
-    sym("@type.php") { fg = Color20 },            -- class color
-    sym("@type.qualifier.php") { fg = Color4 },   -- public, const, private, static
-    sym("@property.php") { Identifier },          -- variable color
-    sym("@variable.builtin.php") { fg = Color4 }, -- $this, self
-    sym("@dollar_sign.php") { fg = Color6 },      -- variable's dolar sign
-    sym("@constant.builtin.php") { fg = Color3 }, -- null
+    sym("@constructor.php") { fg = Color20 },
+    sym("@type.php") { fg = Color20 },                -- class color
+    sym("@type.qualifier.php") { fg = Color4 },       -- public, const, private, static
+    sym("@property.php") { Identifier },              -- variable color
+    sym("@variable.builtin.php") { fg = Color4 },     -- $this, self
+    sym("@dollar_sign.php") { fg = Color6 },          -- variable's dolar sign
+    sym("@constant.builtin.php") { fg = Color3 },     -- null
+    sym("@string.interpolation.php") { fg = Color5 }, -- "example: {$variable}"
 
     -- phpdoc
-    sym("@attribute.phpdoc") { fg = Color6 },                  -- >>@property<< @var
+    sym("@attribute.phpdoc") { fg = Color3 },                  -- >>@property<< @var
     sym("@type.phpdoc") { fg = Color5, italic = true },        -- @property >>int<< $variable
     sym("@named_type.phpdoc") { fg = Color20, italic = true }, -- @property >>User<< $variable
     sym("@property.phpdoc") { fg = Color0 },                   -- @property int $>>variable<<

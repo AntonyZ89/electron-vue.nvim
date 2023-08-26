@@ -13,3 +13,5 @@
  (member_access_expression)
  (name) @type.property
 )
+
+(encapsed_string (string_value) ["{" "}"] @string.interpolation)

@@ -1,0 +1,17 @@
+{
+  "string": "Hello World",
+  "array": [
+    "1",
+    2,
+    [],
+    {},
+    true,
+    false
+  ],
+  "object": {
+    "key": "value",
+    "array": [
+      1
+    ]
+  }
+}
