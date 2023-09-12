@@ -6,13 +6,15 @@
     (tag_name) @_i18n
     (attribute
       (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @_json)
+      (quoted_attribute_value (attribute_value) @injection.language)
     )
   )
+  (text) @injection.content
   (#eq? @_i18n "i18n")
   (#eq? @_lang "lang")
-  (#eq? @_json "json")
-  (text) @json
+  (#eq? @injection.language "json")
+  (#set! injection.language "json")
+  (#set! injection.include-children)
 )
 
 ; <i18n lang="yaml">
@@ -21,13 +23,14 @@
     (tag_name) @_i18n
     (attribute
       (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @_yaml)
+      (quoted_attribute_value (attribute_value) @injection.language)
     )
   )
+  (text) @injection.content
   (#eq? @_i18n "i18n")
   (#eq? @_lang "lang")
-  (#any-of? @_yaml "yaml" "yml")
-  (text) @yaml
+  (#any-of? @injection.language "yaml" "yml")
+  (#set! injection.include-children)
 )
 
 ; <i18n lang="json5">
@@ -36,11 +39,12 @@
     (tag_name) @_i18n
     (attribute
       (attribute_name) @_lang
-      (quoted_attribute_value (attribute_value) @_json5)
+      (quoted_attribute_value (attribute_value) @injection.language)
     )
   )
+  (text) @injection.content
   (#eq? @_i18n "i18n")
   (#eq? @_lang "lang")
-  (#eq? @_json5 "json5")
-  (text) @json5
+  (#eq? @injection.language "json5")
+  (#set! injection.include-children)
 )

@@ -117,14 +117,14 @@ local theme = lush(function(injected_functions)
     -- MsgArea        { }, -- Area for messages and cmdline
     -- MsgSeparator   { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
     -- MoreMsg        { }, -- |more-prompt|
-    -- NonText        { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-    Normal { bg = Color10, fg = Color9 }, -- Normal text
-    -- NormalFloat    { }, -- Normal text in floating windows.
+    NonText { fg = Color3 },                                                -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
+    Normal { bg = Color10, fg = Color9 },                                   -- Normal text
+    NormalFloat { bg = Normal.bg.lighten(10), fg = Normal.fg.lighten(10) }, -- Normal text in floating windows.
     -- FloatBorder    { }, -- Border of floating windows.
     -- FloatTitle     { }, -- Title of floating windows.
     -- NormalNC       { }, -- normal text in non-current windows
-    Pmenu { bg = Color10, fg = Color9 },    -- Popup menu: Normal item.
-    PmenuSel { bg = Color9, fg = Color10 }, -- Popup menu: Selected item.
+    Pmenu { bg = Normal.bg.lighten(10), fg = Normal.fg.darken(20) }, -- Popup menu: Normal item.
+    PmenuSel { bg = Pmenu.bg.lighten(5), fg = Pmenu.fg.lighten(5) }, -- Popup menu: Selected item.
     -- PmenuKind      { }, -- Popup menu: Normal item "kind"
     -- PmenuKindSel   { }, -- Popup menu: Selected item "kind"
     -- PmenuExtra     { }, -- Popup menu: Normal item "extra text"
@@ -193,7 +193,7 @@ local theme = lush(function(injected_functions)
     -- Structure      { }, --   struct, union, enum, etc.
     -- Typedef        { }, --   A typedef
 
-    -- Special        {fg = Color20 }, -- (*) Any special symbol
+    Special { fg = Color20 }, -- (*) Any special symbol
     -- SpecialChar    { }, --   Special character in a constant
     -- Tag            { },            --   You can use CTRL-] on this
     Delimiter { fg = Color6 }, --   Character that needs attention
