@@ -397,11 +397,13 @@ local theme = lush(function(injected_functions)
     sym("@string.interpolation.php") { fg = Color5 }, -- "example: {$variable}"
 
     -- phpdoc
-    sym("@attribute.phpdoc") { fg = Color3 },                  -- >>@property<< @var
-    sym("@type.phpdoc") { fg = Color5, italic = true },        -- @property >>int<< $variable
-    sym("@named_type.phpdoc") { fg = Color20, italic = true }, -- @property >>User<< $variable
-    sym("@property.phpdoc") { fg = Color0 },                   -- @property int $>>variable<<
-    sym("@keyword.phpdoc") { sym("@property.phpdoc") },        -- @property int >>$<<variable
+    sym("@attribute.phpdoc") { fg = Color3 },                          -- >>@property<< @var
+    sym("@type.phpdoc") { fg = Color5, italic = true },                -- @property >>int<< $variable
+    sym("@named_type.phpdoc") { fg = Color20, italic = true },         -- @property >>User<< $variable
+    sym("@named_type.brackets.phpdoc") { fg = Color9, italic = true }, -- @property >>User<< $variable
+
+    sym("@property.phpdoc") { fg = Color0 },                           -- @property int $>>variable<<
+    sym("@keyword.phpdoc") { sym("@property.phpdoc") },                -- @property int >>$<<variable
   }
 end)
 

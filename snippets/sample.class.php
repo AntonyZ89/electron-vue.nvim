@@ -3,6 +3,7 @@
 namespace sample;
 
 use sample\User;
+use sample\Tag;
 
 /**
  * @property int $foo
@@ -10,12 +11,14 @@ use sample\User;
  *
  * @property-read string $userName
  * @property-read User $user
+ * @property-read Tag[] $tags
  */
 class Sample
 {
   public int $foo;
   public string $bar;
   private User $user;
+  private array $tags;
 
   const CONSTANT = 'SAMPLE';
 
@@ -35,5 +38,17 @@ class Sample
   public function getUser(): User
   {
     return $this->user;
+  }
+
+  public function getTags(): Tag
+  {
+    return $this->tags;
+  }
+
+  public function __toString()
+  {
+    $name = $this->user;
+
+    return "user: {$name}";
   }
 }

@@ -14,4 +14,4 @@
  (name) @type.property
 )
 
-(encapsed_string (string_value) ["{" "}"] @string.interpolation)
+(encapsed_string ["{" "}"] @string.interpolation)
