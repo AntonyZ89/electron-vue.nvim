@@ -106,7 +106,7 @@ local theme = lush(function(injected_functions)
     SignColumn { bg = Color10 }, -- Column where |signs| are displayed
     -- IncSearch      { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
     -- Substitute     { }, -- |:substitute| replacement text highlighting
-    LineNr { fg = Color14 }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+    LineNr { fg = Color19 }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
     -- LineNrAbove    { }, -- Line number for when the 'relativenumber' option is set, above the cursor line
     -- LineNrBelow    { }, -- Line number for when the 'relativenumber' option is set, below the cursor line
     CursorLineNr { fg = Color9 }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
@@ -294,7 +294,7 @@ local theme = lush(function(injected_functions)
     -- sym"@constructor"       { }, -- Special
     -- sym"@conditional"       { }, -- Conditional
     -- sym"@repeat"            { }, -- Repeat
-    -- sym"@label"             { }, -- Label
+    sym "@label" { fg = Color2 }, -- Label
     -- sym"@operator"          { }, -- Operator
     -- sym"@keyword"           { }, -- Keyword
     -- sym"@exception"         { }, -- Exception
