@@ -103,7 +103,7 @@ local theme = lush(function(injected_functions)
     -- VertSplit      { }, -- Column separating vertically split windows
     -- Folded         { }, -- Line used for closed folds
     -- FoldColumn     { }, -- 'foldcolumn'
-    SignColumn { bg = Color10 }, -- Column where |signs| are displayed
+    -- SignColumn     { }, -- Column where |signs| are displayed
     -- IncSearch      { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
     -- Substitute     { }, -- |:substitute| replacement text highlighting
     LineNr { fg = Color19 }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
